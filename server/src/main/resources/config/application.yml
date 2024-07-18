@@ -1,0 +1,35 @@
+config-client:
+  test: "This is a test property to be checked at client side."
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: "org.hibernate.dialect.PostgreSQLDialect"
+  datasource:
+    driver-class-name: "org.postgresql.Driver"
+    username: "admin"
+    password: "test"
+    url: "jdbc:postgresql://${SPRING_JPA_DATASOURCE_HOST:127.0.0.1}:5432/test"
+  application:
+    name: "Config Client Application"
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile:
+       - native
+       - native_runtime
+  jpa:
+    properties:
+      hibernate:
+        dialect: "org.hibernate.dialect.H2Dialect"
+  datasource:
+    driver-class-name: "org.h2.Driver"
+    username: "sa"
+    password: "password"
+    url: "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"

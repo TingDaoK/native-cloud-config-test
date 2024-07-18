@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    refresh:
+      enabled: false
+    config:
+      enabled: true
+      uri: "http://${SPRING_JPA_DATASOURCE_HOST:127.0.0.1}:8888"
+      name: application
+      fail-fast: true
+  config:
+    import: "optional:configserver:"
