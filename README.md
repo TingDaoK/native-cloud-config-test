@@ -6,11 +6,11 @@ How to set up this native cloud config test showcase
 2. (Database) docker pull postgres:latest
 3. (Database) docker run --rm --publish 127.0.0.1:5432:5432 -e POSTGRES_DB=test -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=test -d postgres:latest
 4. (Config Client) Start ConfigClientApplication
-5. (Build) `mvn verify -Pnative_runtime` if you want to build a native image or `mvn verify` to only package the executable jar without aot.
+5. (Build) `mvn verify -Pnative_build` if you want to build a native image or `mvn verify` to only package the executable jar without aot.
 6. (Native Image) `cd client`
 7. (Native Image) run command `docker build -t testimg .`
 8. (Native Image) run command `docker images` to find the image id
-9. (Native Image) run command `docker run --rm -e SPRING_JPA_DATASOURCE_HOST=host.docker.internal <image_id>` to run the actual image
+9. (Native Image) run command `docker run --rm -e SPRING_JPA_DATASOURCE_HOST=host.docker.internal -e SPRING_PROFILES_ACTIVE=native_build,runtime <image_id>` to run the actual image
 
 ## Explanation
 
