@@ -37,13 +37,14 @@ COPY ./InitializeAtBuildTime /native-image-build/
 COPY ./InitializeAtRunTime /native-image-build/
 RUN jar -xvf ${ARTIFACT_JAR_PATTERN}
 RUN native-image \
---initialize-at-build-time=`cat ./InitializeAtBuildTime | tr '\n' ','` \
---initialize-at-run-time=`cat ./InitializeAtRunTime | tr '\n' ','` \
---no-fallback \
---enable-https \
---install-exit-handlers \
--H:Name=${BINARY_NAME} \
--cp .:BOOT-INF/classes:`find BOOT-INF/lib | tr '\n' ':'` ${MAIN_CLASS}
+    --initialize-at-build-time=`cat ./InitializeAtBuildTime | tr '\n' ','` \
+    --initialize-at-run-time=`cat ./InitializeAtRunTime | tr '\n' ','` \
+    --no-fallback \
+    --enable-https \
+    --install-exit-handlers \
+    -H:Name=${BINARY_NAME} \
+    -cp .:BOOT-INF/classes:`find BOOT-INF/lib | tr '\n' ':'` ${MAIN_CLASS}
+RUN ls
 
 # Copy native image to destination
 RUN mkdir -p /native-image/
